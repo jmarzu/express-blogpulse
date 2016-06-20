@@ -21,10 +21,12 @@ app.use(function(req, res, next) {
 
 // GET / - display all posts and their authors
 app.get('/', function(req, res) {
+ // res.send('this is the page');
   db.post.findAll({
     include: [db.author]
   })
   .then(function(posts) {
+    console.log(posts);
     res.render('main/index', { posts: posts });
   })
   .catch(function(error) {
@@ -35,6 +37,7 @@ app.get('/', function(req, res) {
 // bring in authors and posts controllers
 app.use('/authors', require('./controllers/authors'));
 app.use('/posts', require('./controllers/posts'));
+app.use('/comments', require('./controllers/comments'));
 
 var server = app.listen(process.env.PORT || 3000);
 
